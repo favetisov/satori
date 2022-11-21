@@ -396,7 +396,7 @@ export default async function backgroundImage(
           width: resolvedWidth,
           height: resolvedHeight,
           preserveAspectRatio: 'none',
-          href: src,
+          'href': src,
         })
       ),
     ]

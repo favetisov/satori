@@ -12,7 +12,7 @@ import {
   buildXMLString,
   SVGNodeToImage,
   normalizeChildren,
-  hasDangerouslySetInnerHTMLProp,
+  hasDangerouslySetInnerHTMLProp, SVGNodeToSVG,
 } from './utils'
 import handler from './handler'
 import FontLoader from './font'
@@ -60,7 +60,6 @@ export default async function* layout(
   // Not a normal element.
   if (!isReactElement(element) || typeof element.type === 'function') {
     let iter: ReturnType<typeof layout>
-
     if (!isReactElement(element)) {
       // Process as text node.
       iter = layoutText(String(element), context)
@@ -76,6 +75,8 @@ export default async function* layout(
       iter = layout((element.type as Function)(element.props), context)
       yield (await iter.next()).value as string[]
     }
+
+
 
     await iter.next()
     const offset = yield
@@ -137,6 +138,7 @@ export default async function* layout(
   const normalizedChildren = normalizeChildren(children)
   const iterators: ReturnType<typeof layout>[] = []
 
+
   let i = 0
   const segmentsMissingFont: string[] = []
   for (const child of normalizedChildren) {
@@ -195,20 +197,26 @@ export default async function* layout(
   } else if (type === 'svg') {
     // When entering a <svg> node, we need to convert it to a <img> with the
     // SVG data URL embedded.
-    const src = SVGNodeToImage(element)
-    baseRenderResult = await rect(
-      {
-        id,
-        left,
-        top,
-        width,
-        height,
-        src,
-        isInheritingTransform,
-        debug,
-      },
-      computedStyle
-    )
+    // const src = SVGNodeToImage(element)
+    // console.log(element.props.children, 'src');
+    // console.log({...element, ...{ props: { x: element.props.x + left, y: element.props.y + top}}});
+
+    // Object.assign(element.props, { x: element.props.x + left, y: element.props.y + top});
+    baseRenderResult = SVGNodeToSVG(element);
+
+    // baseRenderResult = await rect(
+    //   {
+    //     id,
+    //     left,
+    //     top,
+    //     width,
+    //     height,
+    //     src,
+    //     isInheritingTransform,
+    //     debug,
+    //   },
+    //   computedStyle
+    // )
   } else {
     const display = style?.display
     if (

@@ -70,6 +70,7 @@ export default async function satori(
 
   const graphemeImages = { ...options.graphemeImages }
 
+
   const handler = layout(element, {
     id: 'id',
     parentStyle: {},
@@ -116,6 +117,7 @@ export default async function satori(
   let segmentsMissingFont = (await handler.next()).value as string[]
 
   if (options.loadAdditionalAsset) {
+
     if (segmentsMissingFont.length) {
       // Potentially CJK fonts are missing.
       segmentsMissingFont = Array.from(
@@ -155,6 +157,8 @@ export default async function satori(
       Object.assign(graphemeImages, images)
     }
   }
+
+
 
   await handler.next()
   root.calculateLayout(definedWidth, definedHeight, Yoga.DIRECTION_LTR)

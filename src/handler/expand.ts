@@ -146,16 +146,22 @@ function handleSpecialCase(
       const symbol = ~~(Math.random() * 1e9)
       symbols[symbol] = _v
       return symbol + 'px'
-    })
-    const parsed = getStylesForProperty('transform', replaced, true)
-    for (const t of parsed.transform) {
-      for (const k in t) {
-        if (symbols[t[k]]) {
-          t[k] = symbols[t[k]]
+    });
+    let parsed ;
+    if (replaced.includes('matrix')) {
+     const cropped = replaced.split('matrix(')[1].split(')')[0];
+     return { transform: [ { matrix:  cropped.replace(/ /g, '').split(',').join(' ')} ] };
+    } else {
+      parsed = getStylesForProperty('transform', replaced, true)
+      for (const t of parsed.transform) {
+        for (const k in t) {
+          if (symbols[t[k]]) {
+            t[k] = symbols[t[k]]
+          }
         }
       }
+      return parsed
     }
-    return parsed
   }
 
   if (name === 'background') {
@@ -224,6 +230,8 @@ export default function expand(
       const value = preprocess(style[prop], currentColor)
 
       try {
+        handleSpecialCase(name, value, currentColor);
+
         const resolvedStyle =
           handleSpecialCase(name, value, currentColor) ||
           handleFallbackColor(
@@ -232,7 +240,6 @@ export default function expand(
             value as string,
             currentColor
           )
-
         Object.assign(transformedStyle, resolvedStyle)
       } catch (err) {
         throw new Error(

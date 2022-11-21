@@ -10,6 +10,7 @@ export function initFonts(callback: (fonts: SatoriOptions['fonts']) => void) {
   beforeAll(async () => {
     const fontPath = join(process.cwd(), 'test', 'assets', 'Roboto-Regular.ttf')
     const fontData = await fs.readFile(fontPath)
+
     callback([
       {
         name: 'Roboto',
@@ -17,6 +18,30 @@ export function initFonts(callback: (fonts: SatoriOptions['fonts']) => void) {
         weight: 400,
         style: 'normal',
       },
+      {
+        name: 'Montserrat',
+        data: await fs.readFile(join(process.cwd(), 'test', 'assets', 'Montserrat-Medium.ttf')),
+        weight: 400,
+        style: 'normal'
+      },
+      {
+        name: 'Montserrat',
+        data: await fs.readFile(join(process.cwd(), 'test', 'assets', 'Montserrat-SemiBold.ttf')),
+        weight: 600,
+        style: 'normal'
+      },
+      {
+        name: 'Montserrat',
+        data: await fs.readFile(join(process.cwd(), 'test', 'assets', 'Montserrat-Bold.ttf')),
+        weight: 700,
+        style: 'normal'
+      },
+      {
+        name: 'GetVoIP Grotesque',
+        data: await fs.readFile(join(process.cwd(), 'test', 'assets', 'GetVoIP Grotesque.woff')),
+        weight: 400,
+        style: 'normal'
+      }
     ])
   })
 }

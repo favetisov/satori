@@ -94,7 +94,7 @@ export default function text(
   // This grapheme should be rendered as an image.
   if (image) {
     const shapeProps = {
-      href: image,
+      'href': image,
       x: left,
       y: top,
       width,

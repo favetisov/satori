@@ -111,7 +111,7 @@ export default async function handler(
   }
 
   if (type === 'svg') {
-    const viewBox = props.viewBox || props.viewbox
+    const viewBox = props.viewBox || props.viewbox || '0 0 0 0';
     const viewBoxSize = parseViewBox(viewBox)
     const ratio = viewBoxSize[3] / viewBoxSize[2]
 

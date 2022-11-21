@@ -32,6 +32,8 @@ export default async function* buildTextNodes(
     canLoadAdditionalAssets,
   } = context
 
+
+
   if (parentStyle.textTransform === 'uppercase') {
     content = content.toLocaleUpperCase(locale)
   } else if (parentStyle.textTransform === 'lowercase') {
@@ -50,7 +52,6 @@ export default async function* buildTextNodes(
       })
       .join('')
   }
-
   const segmenter = v(
     parentStyle.wordBreak,
     {
@@ -108,7 +109,7 @@ export default async function* buildTextNodes(
   // Yield segments that are missing a font.
   const wordsMissingFont = canLoadAdditionalAssets
     ? words.filter((word) => !engine.has(word))
-    : []
+    : [];
   yield wordsMissingFont
   if (wordsMissingFont.length) {
     // Reload the engine with additional fonts.

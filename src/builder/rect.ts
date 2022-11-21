@@ -42,26 +42,67 @@ export default async function rect(
   let extra = ''
 
   if (style.backgroundColor) {
-    fills.push(style.backgroundColor as string)
+      if (style.backgroundColor.replace(/ /g, '') == 'rgba(0,0,0,0)') {
+          fills.push('none');
+      } else {
+          fills.push(style.backgroundColor as string)
+      }
   }
 
   if (style.opacity !== undefined) {
     opacity = +style.opacity
   }
 
-  if (style.transform) {
-    matrix = transform(
-      {
-        left,
-        top,
-        width,
-        height,
-      },
-      style.transform as unknown as number[],
-      isInheritingTransform,
-      style.transformOrigin as ParsedTransformOrigin | undefined
-    )
+  const path = radius(
+      { left, top, width, height },
+      style as Record<string, number>
+  )
+
+  if (path) {
+      type = 'path'
   }
+
+  if (style.transform) {
+    // matrix = transform(
+    //   {
+    //     left,
+    //     top,
+    //     width,
+    //     height,
+    //   },
+    //   style.transform as unknown as number[],
+    //   isInheritingTransform,
+    //   style.transformOrigin as ParsedTransformOrigin | undefined
+    // );
+      // TODO add other transformations
+      // console.log(style.transform, 'TRANSFORM');
+      // matrix = `translate(${left},${top})`;
+      matrix = '';
+
+      const transform = {};
+      style.transform.forEach(obj => {
+          Object.keys(obj).forEach(k => {
+              transform[k] = obj[k];
+          })
+      });
+
+      matrix += 'translate(' + ((transform['translateX'] || 0) + left) + ', ' + ((transform['translateY'] || 0) + top) + ') ';
+      if (transform['scaleX'] || transform['scaleY']) {
+          matrix += 'scale(' + (transform['scaleX'] || 0) + ', ' + (transform['scaleY'] || 0) + ') ';
+      }
+      if (transform['rotate']) {
+          let extraTO = '';
+          if (style.transformOrigin) {
+              const x = (style.transformOrigin['xAbsolute'] || 0);
+              const y = (style.transformOrigin['yAbsolute']  || 0);
+              extraTO = ', ' + x + ', ' + y;
+          }
+          matrix += 'rotate(' + transform['rotate'] + extraTO + ') ';
+      }
+  } else if (!path) {
+      matrix = `translate(${left},${top})`;
+  }
+
 
   let backgroundShapes = ''
   if (style.backgroundImage) {
@@ -92,21 +133,15 @@ export default async function rect(
     }
   }
 
-  const path = radius(
-    { left, top, width, height },
-    style as Record<string, number>
-  )
-  if (path) {
-    type = 'path'
-  }
+
 
   const clipPathId = style._inheritedClipPathId as number | undefined
   const overflowMaskId = style._inheritedMaskId as number | undefined
 
   if (debug) {
     extra = buildXMLString('rect', {
-      x: left,
-      y: top,
+      x: 0,
+      y: 0,
       width,
       height,
       fill: 'transparent',
@@ -119,12 +154,17 @@ export default async function rect(
 
   const { backgroundClip, filter: cssFilter } = style
 
-  const currentClipPath =
+  let currentClipPath =
     backgroundClip === 'text'
       ? `url(#satori_bct-${id})`
       : clipPathId
       ? `url(#${clipPathId})`
-      : undefined
+      : undefined;
+
+
+  if (style.clipPath && style.clipPath != 'none') {
+      currentClipPath = style.clipPath.replace(/\"/g, "'");
+  }
 
   const clip = overflow(
     { left, top, width, height, path, id, matrix, currentClipPath, src },
@@ -137,8 +177,8 @@ export default async function rect(
   let shape = fills
     .map((fill) =>
       buildXMLString(type, {
-        x: left,
-        y: top,
+        x: 0,
+        y: 0,
         width,
         height,
         fill,
@@ -146,7 +186,7 @@ export default async function rect(
         transform: matrix ? matrix : undefined,
         'clip-path': currentClipPath,
         style: cssFilter ? `filter:${cssFilter}` : undefined,
-        mask: overflowMaskId ? `url(#${overflowMaskId})` : undefined,
+        // mask: overflowMaskId ? `url(#${overflowMaskId})` : undefined,
       })
     )
     .join('')
@@ -187,19 +227,32 @@ export default async function rect(
         : style.objectFit === 'cover'
         ? 'xMidYMid slice'
         : 'none'
+    //
+    // shape += buildXMLString('image', {
+    //   x: left + offsetLeft,
+    //   y: top + offsetTop,
+    //   width: width - offsetLeft - offsetRight,
+    //   height: height - offsetTop - offsetBottom,
+    //   'href': src,
+    //   preserveAspectRatio,
+    //   transform: matrix ? matrix : undefined,
+    //   style: cssFilter ? `filter:${cssFilter}` : undefined,
+    //   'clip-path': `url(#satori_cp-${id})`,
+    //   mask: `url(#satori_om-${id})`,
+    // })
 
     shape += buildXMLString('image', {
-      x: left + offsetLeft,
-      y: top + offsetTop,
-      width: width - offsetLeft - offsetRight,
-      height: height - offsetTop - offsetBottom,
-      href: src,
+      x: offsetLeft,
+      y: offsetTop,
+      width: width - offsetRight,
+      height: height - offsetBottom,
+      'href': src,
       preserveAspectRatio,
       transform: matrix ? matrix : undefined,
       style: cssFilter ? `filter:${cssFilter}` : undefined,
-      'clip-path': `url(#satori_cp-${id})`,
-      mask: `url(#satori_om-${id})`,
-    })
+      'clip-path': currentClipPath,
+      // mask: `url(#satori_om-${id})`,
+    });
   }
 
   if (borderClip) {
@@ -220,7 +273,7 @@ export default async function rect(
         },
       },
       style
-    )
+    );
   }
 
   // box-shadow.
@@ -231,8 +284,8 @@ export default async function rect(
       id,
       opacity,
       shape: buildXMLString(type, {
-        x: left,
-        y: top,
+        x: 0,
+        y: 0,
         width,
         height,
         fill: '#fff',
@@ -241,7 +294,7 @@ export default async function rect(
         d: path ? path : undefined,
         transform: matrix ? matrix : undefined,
         'clip-path': currentClipPath,
-        mask: overflowMaskId ? `url(#${overflowMaskId})` : undefined,
+        // mask: overflowMaskId ? `url(#${overflowMaskId})` : undefined,
       }),
     },
     style
