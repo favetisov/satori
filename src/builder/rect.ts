@@ -34,12 +34,13 @@ export default async function rect(
 
   const isImage = !!src
 
-  let type: 'rect' | 'path' = 'rect'
-  let matrix = ''
-  let defs = ''
-  let fills: string[] = []
-  let opacity = 1
-  let extra = ''
+  let type: 'rect' | 'path' = 'rect';
+  let matrix = '';
+  let borderMatrix = '';
+  let defs = '';
+  let fills: string[] = [];
+  let opacity = 1;
+  let extra = '';
 
   if (style.backgroundColor) {
       if (style.backgroundColor.replace(/ /g, '') == 'rgba(0,0,0,0)') {
@@ -79,6 +80,8 @@ export default async function rect(
       // matrix = `translate(${left},${top})`;
       matrix = '';
 
+
+
       const transform = {};
       style.transform.forEach(obj => {
           Object.keys(obj).forEach(k => {
@@ -87,9 +90,23 @@ export default async function rect(
       });
 
       matrix += 'translate(' + ((transform['translateX'] || 0) + left) + ', ' + ((transform['translateY'] || 0) + top) + ') ';
-      if (transform['scaleX'] || transform['scaleY']) {
-          matrix += 'scale(' + (transform['scaleX'] || 0) + ', ' + (transform['scaleY'] || 0) + ') ';
+      borderMatrix = '';
+      if (!src) {
+          if (transform['scaleX'] || transform['scaleY']) {
+              matrix += 'scale(' + (transform['scaleX'] || 0) + ', ' + (transform['scaleY'] || 0) + ') ';
+              borderMatrix += 'scale(' + (transform['scaleX'] || 0) + ', ' + (transform['scaleY'] || 0) + ') ';
+          } else if (transform['scale']) {
+              matrix += 'scale(' + (transform['scale'] || 0) + ') ';
+              borderMatrix += 'scale(' + (transform['scale'] || 0) + ')';
+          }
+      } else {
+          const scale = style.transform.__parent?.find(k => k.scale)?.scale;
+          if (scale) {
+              matrix += 'scale(' + (scale)  + ') ';
+              borderMatrix += 'scale(' + (scale)  + ') ';
+          }
       }
+
       if (transform['rotate']) {
           let extraTO = '';
           if (style.transformOrigin) {
@@ -98,13 +115,14 @@ export default async function rect(
               extraTO = ', ' + x + ', ' + y;
           }
           matrix += 'rotate(' + transform['rotate'] + extraTO + ') ';
+          borderMatrix += 'rotate(' + transform['rotate'] + extraTO + ') ';
       }
   } else if (!path) {
       matrix = `translate(${left},${top})`;
   }
 
 
-  let backgroundShapes = ''
+    let backgroundShapes = ''
   if (style.backgroundImage) {
     const backgrounds: string[][] = []
 
@@ -266,7 +284,7 @@ export default async function rect(
         width,
         height,
         props: {
-          transform: matrix ? matrix : undefined,
+          transform: borderMatrix ? borderMatrix : undefined,
           // When using `background-clip: text`, we need to draw the extra border because
           // it shouldn't be clipped by the clip path, so we are not using currentClipPath here.
           'clip-path': `url(#${rectClipId})`,
@@ -292,7 +310,7 @@ export default async function rect(
         stroke: '#fff',
         'stroke-width': 0,
         d: path ? path : undefined,
-        transform: matrix ? matrix : undefined,
+        // transform: matrix ? matrix : undefined,
         'clip-path': currentClipPath,
         // mask: overflowMaskId ? `url(#${overflowMaskId})` : undefined,
       }),

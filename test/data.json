@@ -4,22 +4,10 @@
     "style": {
       "alignItems": "flex-start",
       "backgroundColor": "rgba(0, 0, 0, 0)",
-      "borderBottomColor": "rgb(0, 0, 0)",
       "borderBottomLeftRadius": "0px",
       "borderBottomRightRadius": "0px",
-      "borderBottomStyle": "none",
-      "borderBottomWidth": "0px",
-      "borderLeftColor": "rgb(0, 0, 0)",
-      "borderLeftStyle": "none",
-      "borderLeftWidth": "0px",
-      "borderRightColor": "rgb(0, 0, 0)",
-      "borderRightStyle": "none",
-      "borderRightWidth": "0px",
-      "borderTopColor": "rgb(0, 0, 0)",
       "borderTopLeftRadius": "0px",
       "borderTopRightRadius": "0px",
-      "borderTopStyle": "none",
-      "borderTopWidth": "0px",
       "boxSizing": "content-box",
       "clipPath": "none",
       "color": "rgb(0, 0, 0)",
@@ -61,8 +49,6 @@
           "style": {
             "alignItems": "flex-start",
             "backgroundColor": "rgb(255, 215, 0)",
-            "borderBottomStyle": "solid",
-            "borderBottomWidth": "4px",
             "boxSizing": "border-box",
             "flexDirection": "column",
             "height": "200px",
@@ -76,7 +62,79 @@
             "display": "flex",
             "justifyContent": "flex-start"
           },
-          "children": []
+          "children": [
+            {
+              "type": "div",
+              "props": {
+                "style": {
+                  "alignItems": "flex-start",
+                  "backgroundColor": "rgb(255, 0, 0)",
+                  "flexDirection": "column",
+                  "height": "200px",
+                  "paddingBottom": "50px",
+                  "paddingLeft": "50px",
+                  "paddingRight": "50px",
+                  "paddingTop": "50px",
+                  "transform": "translate(0, 0) scale(0.5) ",
+                  "transformOrigin": "0px 0px",
+                  "width": "200px",
+                  "display": "flex",
+                  "justifyContent": "flex-start"
+                },
+                "children": [
+                  {
+                    "type": "div",
+                    "props": {
+                      "style": {
+                        "alignItems": "flex-start",
+                        "backgroundColor": "rgba(0, 0, 0, 0)",
+                        "flexDirection": "column",
+                        "height": "50px",
+                        "paddingBottom": "0px",
+                        "paddingLeft": "0px",
+                        "paddingRight": "0px",
+                        "paddingTop": "0px",
+                        "transformOrigin": "50px 25px",
+                        "width": "100px",
+                        "display": "flex",
+                        "justifyContent": "flex-start"
+                      },
+                      "children": [
+                        {
+                          "type": "img",
+                          "props": {
+                            "style": {
+                              "alignItems": "flex-start",
+                              "clipPath": "url(\"#clip2\")",
+                              "flexDirection": "row",
+                              "height": "50px",
+                              "maxHeight": "50px",
+                              "maxWidth": "50px",
+                              "minHeight": "50px",
+                              "minWidth": "50px",
+                              "paddingBottom": "0px",
+                              "paddingLeft": "0px",
+                              "paddingRight": "0px",
+                              "paddingTop": "0px",
+                              "transform": "translate(10px, 0) scale(1, 1) ",
+                              "transformOrigin": "25px 25px",
+                              "width": "50px",
+                              "justifyContent": "flex-start"
+                            },
+                            "children": [],
+                            "src": "https://m.media-amazon.com/images/I/51T5U3QHaeL._AC_SX466_.jpg",
+                            "height": 25,
+                            "width": 25,
+                            "clip-path": "url(\"#clip2\")"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     ],
