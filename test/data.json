@@ -17,7 +17,7 @@
       "fontSize": "16px",
       "fontStyle": "normal",
       "fontWeight": "400",
-      "height": "200px",
+      "height": "4000px",
       "lineHeight": "24.8px",
       "marginBottom": "0px",
       "marginLeft": "0px",
@@ -35,7 +35,7 @@
       "stroke": "none",
       "textAlign": "start",
       "textTransform": "none",
-      "transformOrigin": "2000px 100px",
+      "transformOrigin": "2000px 2000px",
       "transformStyle": "flat",
       "whiteSpace": "normal",
       "width": "4000px",
@@ -49,16 +49,21 @@
           "style": {
             "alignItems": "flex-start",
             "backgroundColor": "rgb(255, 215, 0)",
+            "bottom": "0px",
             "boxSizing": "border-box",
             "flexDirection": "column",
-            "height": "200px",
+            "height": "4000px",
+            "left": "0px",
             "marginRight": "0px",
-            "paddingBottom": "0px",
-            "paddingLeft": "0px",
-            "paddingRight": "0px",
-            "paddingTop": "0px",
-            "transformOrigin": "100px 100px",
-            "width": "200px",
+            "paddingBottom": "150px",
+            "paddingLeft": "150px",
+            "paddingRight": "150px",
+            "paddingTop": "150px",
+            "position": "relative",
+            "right": "0px",
+            "top": "0px",
+            "transformOrigin": "2000px 2000px",
+            "width": "4000px",
             "display": "flex",
             "justifyContent": "flex-start"
           },
@@ -68,67 +73,109 @@
               "props": {
                 "style": {
                   "alignItems": "flex-start",
-                  "backgroundColor": "rgb(255, 0, 0)",
-                  "flexDirection": "column",
-                  "height": "200px",
-                  "paddingBottom": "50px",
-                  "paddingLeft": "50px",
-                  "paddingRight": "50px",
-                  "paddingTop": "50px",
-                  "transform": "translate(0, 0) scale(0.5) ",
-                  "transformOrigin": "0px 0px",
-                  "width": "200px",
+                  "backgroundColor": "rgba(0, 0, 0, 0)",
+                  "bottom": "4000px",
                   "display": "flex",
+                  "flexDirection": "column",
+                  "height": "0px",
+                  "paddingBottom": "0px",
+                  "paddingLeft": "0px",
+                  "paddingRight": "0px",
+                  "paddingTop": "0px",
+                  "position": "absolute",
+                  "right": "4000px",
+                  "transformOrigin": "0px 0px",
+                  "width": "0px",
+                  "zIndex": "1",
                   "justifyContent": "flex-start"
                 },
                 "children": [
+                  {
+                    "type": "svg",
+                    "props": {
+                      "style": {
+                        "alignItems": "flex-start",
+                        "flexDirection": "row",
+                        "height": "0px",
+                        "paddingBottom": "0px",
+                        "paddingLeft": "0px",
+                        "paddingRight": "0px",
+                        "paddingTop": "0px",
+                        "transformOrigin": "0px 0px",
+                        "width": "0px",
+                        "justifyContent": "flex-start"
+                      },
+                      "children": [
+                        {
+                          "type": "clipPath",
+                          "props": {
+                            "style": {
+                              "alignItems": "flex-start",
+                              "flexDirection": "row",
+                              "height": "auto",
+                              "minHeight": "0px",
+                              "minWidth": "0px",
+                              "paddingBottom": "0px",
+                              "paddingLeft": "0px",
+                              "paddingRight": "0px",
+                              "paddingTop": "0px",
+                              "transformOrigin": "0px 0px",
+                              "width": "auto",
+                              "justifyContent": "flex-start"
+                            },
+                            "children": [
+                              {
+                                "type": "path",
+                                "props": {
+                                  "style": {
+                                    "alignItems": "flex-start",
+                                    "flexDirection": "row",
+                                    "height": "auto",
+                                    "paddingBottom": "0px",
+                                    "paddingLeft": "0px",
+                                    "paddingRight": "0px",
+                                    "paddingTop": "0px",
+                                    "transformOrigin": "0px 0px",
+                                    "width": "auto",
+                                    "justifyContent": "flex-start"
+                                  },
+                                  "children": [],
+                                  "d": "M \n        924.16252,3408.353 \n        C 1352.20684,3724.38572\n        1824.2557199999999,4000.4144 \n        2012.2751600000001,4000.4144\n        2196.29424,3996.41388 \n        2664.34272,3720.38528 \n        3092.3870399999996,3404.3526 \n        3516.4309200000002,3092.32024 \n        3924.47324,2724.28212 \n        3984.4794,2548.26392 \n        4000.4811999999997,2368.24524 \n        3928.47368,1828.18932 \n        3764.4565999999995,1316.13632 \n        3604.44008,800.08284 \n        3380.41684,284.029412 \n        3232.4015200000003,172.017816 \n        3084.3862,60.006212000000005 \n        2540.32984,0 2012.2751600000001\n        0 1476.2196800000002,0 928.16292\n        52.005384 772.14672\n        164.01698799999997 h -3.9992 \n        C 620.131,280.029 \n        396.10778799999997,792.0820000000001 \n        232.09080400000002,1308.13544 \n        72.074232,1820.1885200000002 \n        -43.937780000000004,2364.2448400000003 \n        16.0684316,2540.2630400000003 \n        76.074648,2720.28168 \n        492.11772,3092.32024 \n        924.16252,3408.353\n            "
+                                }
+                              }
+                            ],
+                            "id": "clipped-path"
+                          }
+                        }
+                      ],
+                      "x": 0,
+                      "y": 0,
+                      "width": "0",
+                      "height": "0"
+                    }
+                  },
                   {
                     "type": "div",
                     "props": {
                       "style": {
                         "alignItems": "flex-start",
-                        "backgroundColor": "rgba(0, 0, 0, 0)",
+                        "backgroundColor": "rgb(139, 0, 0)",
+                        "bottom": "-4000px",
+                        "clipPath": "url(\"#clipped-path\")",
                         "flexDirection": "column",
-                        "height": "50px",
+                        "height": "4000px",
                         "paddingBottom": "0px",
                         "paddingLeft": "0px",
                         "paddingRight": "0px",
                         "paddingTop": "0px",
-                        "transformOrigin": "50px 25px",
-                        "width": "100px",
+                        "right": "-4000px",
+                        "transformOrigin": "2000px 2000px",
+                        "width": "4000px",
                         "display": "flex",
                         "justifyContent": "flex-start"
                       },
-                      "children": [
-                        {
-                          "type": "img",
-                          "props": {
-                            "style": {
-                              "alignItems": "flex-start",
-                              "clipPath": "url(\"#clip2\")",
-                              "flexDirection": "row",
-                              "height": "50px",
-                              "maxHeight": "50px",
-                              "maxWidth": "50px",
-                              "minHeight": "50px",
-                              "minWidth": "50px",
-                              "paddingBottom": "0px",
-                              "paddingLeft": "0px",
-                              "paddingRight": "0px",
-                              "paddingTop": "0px",
-                              "transform": "translate(10px, 0) scale(1, 1) ",
-                              "transformOrigin": "25px 25px",
-                              "width": "50px",
-                              "justifyContent": "flex-start"
-                            },
-                            "children": [],
-                            "src": "https://m.media-amazon.com/images/I/51T5U3QHaeL._AC_SX466_.jpg",
-                            "height": 25,
-                            "width": 25,
-                            "clip-path": "url(\"#clip2\")"
-                          }
-                        }
-                      ]
+                      "children": [],
+                      "clip-path": "url(\"#clipped-path\")"
                     }
                   }
                 ]
